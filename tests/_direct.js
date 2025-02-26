@@ -1,4 +1,4 @@
-// direct insert remove test
+// direct insert remove test.
 setTimeout(async () => {
     console.time('insert');
 
