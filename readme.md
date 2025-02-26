@@ -1,11 +1,40 @@
 ## miniq by [tux](https://github.com/realtux)
 miniq is a high performance minimal job queue with support for both http and websocket producers and consumers.
 
-#### installation
+#### usage with docker (recommended)
 ```bash
-# with docker
-tbd
+# foreground
+docker run \
+    --name miniq \
+    --restart unless-stopped \
+    -p 8282:8282 \
+    ghcr.io/realtux/miniq:latest
 
+# background
+docker run -d \
+    --name miniq \
+    --restart unless-stopped \
+    -p 8282:8282 \
+    ghcr.io/realtux/miniq:latest
+
+# background with persistence and/or custom config
+docker run -d \
+    --name miniq \
+    --restart unless-stopped \
+    -p 8282:8282 \
+    -v /path/to/persist.json:/app/data/persist.json \
+    -v /path/to/config.json:/app/data/config.json \
+    ghcr.io/realtux/miniq:latest
+
+# with node.js
+git clone https://github.com/realtux/miniq
+cd miniq
+npm i
+npm start
+```
+
+#### usage from source
+```bash
 # with node.js
 git clone https://github.com/realtux/miniq
 cd miniq
@@ -28,6 +57,27 @@ npm start
 - `124k/sec` jobs consumed over websockets
 
 `miniq` scales extremely well maintaining the above throughput even with gigabytes of jobs in memory. you'll run out of memory before creating any noticeable degradation in throughput.
+
+### configuration
+below is the configuration file for `miniq`. it is optional and if not supplied will use the below values by default.
+```json
+{
+    "server": {
+        "host": "0.0.0.0",
+        "port": 8282
+    },
+    "persistence": {
+        "enabled": true,
+        "interval": 60
+    }
+}
+```
+- `server`
+  - `host` - host to run on, `0.0.0.0` for all hosts
+  - `port` - port to run on
+- `persistence`
+  - `enabled` - whether or not to persist the queue to disk
+  - `interval` - how often in seconds to persist to disk
 
 ---
 
