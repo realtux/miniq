@@ -25,12 +25,6 @@ docker run -d \
     -v /path/to/persist.json:/app/data/persist.json \
     -v /path/to/config.json:/app/data/config.json \
     ghcr.io/realtux/miniq:latest
-
-# with node.js
-git clone https://github.com/realtux/miniq
-cd miniq
-npm i
-npm start
 ```
 
 #### usage from source
